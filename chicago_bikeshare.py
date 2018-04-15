@@ -59,10 +59,17 @@ for row in data_list:
 # input("Press Enter to continue...")
 # # TASK 3
 # # TODO: Create a function to add the columns(features) of a list in another list in the same order
+
+
+#       Args:
+#           data: List with all columns.
+#           index: Index of colunm.
+#       Returns:
+#           List with all values of a column
 def column_to_list(data, index):
     column_list = []
     # Tip: You can use a for to iterate over the samples, get the feature by index and append into a list
-    for row in data_list:
+    for row in data:
         column_list.append(row[index])
     return column_list
 
@@ -87,8 +94,18 @@ male = 0
 female = 0
 
 gender_list = column_to_list(data_list, -2)
-male = sum(gender == "Male" for gender in gender_list)
-female = sum(gender == "Female" for gender in gender_list)
+
+def sum_matcher(matcher, some_list):
+    count = 0;
+    for item in some_list:
+        if item == matcher:
+            count = count + 1;
+    return count;
+
+
+
+male = sum_matcher("Male", gender_list)
+female = sum_matcher("Female", gender_list)
 
 # # Checking the result
 print("\nTASK 4: Printing how many males and females we found")
@@ -104,10 +121,14 @@ input("Press Enter to continue...")
 # # TODO: Create a function to count the genders. Return a list
 # # Should return a list with [count_male, counf_female] (e.g., [10, 15] means 10 Males, 15 Females)
 
+#       Args:
+#           data_list: List with all columns.
+#       Returns:
+#           Quantity of male and female that appears in the dataset
 def count_gender(data_list):
     gender_list = column_to_list(data_list, -2)
-    male = sum(gender == "Male" for gender in gender_list)
-    female = sum(gender == "Female" for gender in gender_list)
+    male = sum_matcher("Male", gender_list)
+    female = sum_matcher("Female", gender_list)
     return [male, female]
 
 print("\nTASK 5: Printing result of count_gender")
@@ -161,10 +182,15 @@ input("Press Enter to continue...")
 # # TODO: Plot a similar graph for user_types. Make sure the legend is correct.
 print("\nTASK 7: Check the chart!")
 
+
+#       Args:
+#           data_list: List with all columns.
+#       Returns:
+#           Quantity of user type (Customer or Subscriber)
 def count_user_type(data_list):
     user_type_list = column_to_list(data_list, -3)
-    customer = sum(user_type == "Customer" for user_type in user_type_list)
-    subscriber = sum(user_type == "Subscriber" for user_type in user_type_list)
+    customer = sum_matcher("Customer", user_type_list)
+    subscriber = sum_matcher("Subscriber", user_type_list)
     return [customer, subscriber]
 
 user_type_list = column_to_list(data_list, -3)
@@ -205,6 +231,10 @@ max_trip = 0.
 mean_trip = 0.
 median_trip = 0.
 
+#       Args:
+#           somelist: Numeric list
+#       Returns:
+#           Min value of this list
 def min_function(somelist):
     min_value = somelist[0]
     for value in somelist:
@@ -212,6 +242,10 @@ def min_function(somelist):
             min_value = value
     return min_value
  
+#       Args:
+#           somelist: Numeric list
+#       Returns:
+#           Max value of this list
 def max_function(somelist):
     max_value = somelist[0]
     for value in somelist:
@@ -219,18 +253,29 @@ def max_function(somelist):
             max_value = value
     return max_value    
 
+#       Args:
+#           somelist: Numeric list
+#       Returns:
+#           Median value of this list
 def median(alist):
     srtd = sorted(alist) 
     mid = len(alist)/2     
     if len(alist) % 2 == 0:   
         return (round(srtd[mid-1] + srtd[mid])) / 2.0
     else:
-        return srtd[round(mid)] 
+        return srtd[round(mid)]  
+
+
+def sum_list(some_list):
+    count = 0
+    for item in some_list:
+        count = count + item
+    return count    
 
 
 min_trip = min_function(trip_duration_list)
 max_trip = max_function(trip_duration_list)
-mean_trip = round(sum(trip_duration_list)/len(trip_duration_list))
+mean_trip = round(sum_list(trip_duration_list)/len(trip_duration_list))
 median_trip = median(trip_duration_list)
 
  
@@ -285,27 +330,25 @@ input("Press Enter to continue...")
 # # TODO: Create a function to count user types without hardcoding the types
 # # so we can use this function with a different kind of data.
 print("Will you face it?")
-answer = "yes"
+answer = "no"
 
-def count_items(column_list):
-    item_types = set()
-    count_items = []
+# def count_items(column_list):
+#     item_types = list(set(column_list)) 
+#     count_itens = [0 for _ in range(len(item_types))]
+#     for e in column_list:
+#         if e == item_types[0]:
+#             count_itens[0] +=1
 
-    for item in column_list:
-        item_types.add(item)    
-
-    count_items = column_list
-
-    return item_types, count_items
+#     return item_types, count_items
 
 
-if answer == "yes":
-#     # ------------ DO NOT CHANGE ANY CODE HERE ------------
-    column_list = column_to_list(data_list, -2)
-    types, counts = count_items(column_list)
-    print("\nTASK 11: Printing results for count_items()")
-    print("Types:", types, "Counts:", counts)
-    assert len(types) == 3, "TASK 11: There are 3 types of gender!"
-    assert len(counts) == 1551505, "TASK 11: Returning wrong result!"
+# if answer == "yes":
+# #     # ------------ DO NOT CHANGE ANY CODE HERE ------------
+#     column_list = column_to_list(data_list, -2)
+#     types, counts = count_items(column_list)
+#     print("\nTASK 11: Printing results for count_items()")
+#     print("Types:", types, "Counts:", counts)
+#     assert len(types) == 3, "TASK 11: There are 3 types of gender!"
+#     assert sum(counts) == 1551505, "TASK 11: Returning wrong result!"
 #     # ------------ DO NOT CHANGE ANY CODE HERE ------------
  
